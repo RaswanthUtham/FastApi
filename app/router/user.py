@@ -5,9 +5,9 @@ from typing import List
 from .. import models, schemas, utils
 from ..database import get_db
 
-router = APIRouter()
+router = APIRouter(prefix="/users")
 
-@router.post("/users", status_code=status.HTTP_201_CREATED, response_model=schemas.UserPost)
+@router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.UserPost)
 async def create_user(user: schemas.UserCreate, db:Session=Depends(get_db)):
     user.password = utils.hash(user.password)
     new_user = models.User(**user.dict())
@@ -16,12 +16,12 @@ async def create_user(user: schemas.UserCreate, db:Session=Depends(get_db)):
     db.refresh(new_user)
     return new_user
 
-@router.get("/users", response_model=List[schemas.UserPost])
+@router.get("/", response_model=List[schemas.UserPost])
 async def get_users(db: Session=Depends(get_db)):
     users = db.query(models.User).all()
     return users
 
-@router.get("/users/{id}", response_model=schemas.UserPost)
+@router.get("/{id}", response_model=schemas.UserPost)
 async def get_user_by_id(id: int, db: Session=Depends(get_db)):
     user = db.query(models.User).filter(models.User.id ==id).first()
     if not user:
