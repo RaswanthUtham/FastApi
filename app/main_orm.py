@@ -5,7 +5,7 @@ from typing import AsyncContextManager, Optional, List
 
 from starlette.status import HTTP_201_CREATED
 
-from . import models, schemas
+from . import models, schemas, utils
 from .database import engine, get_db
 
 models.Base.metadata.create_all(bind=engine)
@@ -51,6 +51,7 @@ async def update_post_by_id(id: int, post: schemas.PostCreate, db: Session=Depen
 
 @app.post("/users", status_code=HTTP_201_CREATED, response_model=schemas.UserPost)
 async def create_user(user: schemas.UserCreate, db:Session=Depends(get_db)):
+    user.password = utils.hash(user.password)
     new_user = models.User(**user.dict())
     db.add(new_user)
     db.commit()
