@@ -60,5 +60,12 @@ async def create_user(user: schemas.UserCreate, db:Session=Depends(get_db)):
 
 @app.get("/users", response_model=List[schemas.UserPost])
 async def get_users(db: Session=Depends(get_db)):
-    posts = db.query(models.User).all()
-    return posts
+    users = db.query(models.User).all()
+    return users
+
+@app.get("/users/{id}", response_model=schemas.UserPost)
+async def get_user_by_id(id: int, db: Session=Depends(get_db)):
+    user = db.query(models.User).filter(models.User.id ==id).first()
+    if not user:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"User with {id} does not exist")
+    return user
