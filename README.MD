@@ -8,3 +8,6 @@
     url/redoc
 
     example: http://localhost:8000/docs
+
+## packages
+    python-jose[cryptography] for password authentication
