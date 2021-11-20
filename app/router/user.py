@@ -27,3 +27,9 @@ async def get_user_by_id(id: int, db: Session=Depends(get_db)):
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"User with {id} does not exist")
     return user
+
+@router.delete("/", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_all_users(db: Session=Depends(get_db)):
+    post = db.query(models.User).delete()
+    db.commit()
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
