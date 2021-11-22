@@ -7,22 +7,6 @@ from datetime import datetime
 from pydantic.networks import EmailStr
 from typing import Optional
 
-class PostBase(BaseModel):
-    title: str
-    content: str
-    published: bool = True
-
-class PostCreate(PostBase):
-    pass
-
-class Post(PostBase):
-    created_at: datetime
-    id: int
-    owner_id: int
-
-    class Config:
-        orm_mode = True
-
 class UserCreate(BaseModel):
     email: EmailStr
     password: str
@@ -38,6 +22,23 @@ class UserPost(BaseModel):
 class UserLogin(BaseModel):
     email: EmailStr
     password: str
+
+class PostBase(BaseModel):
+    title: str
+    content: str
+    published: bool = True
+
+class PostCreate(PostBase):
+    pass
+
+class Post(PostBase):
+    created_at: datetime
+    id: int
+    owner_id: int
+    owner: UserPost
+
+    class Config:
+        orm_mode = True
 
 class Token(BaseModel):
     access_token: str
