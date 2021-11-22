@@ -38,6 +38,7 @@ class Post(PostBase):
     owner: UserPost
 
     class Config:
+        """ to avoid this error "value is not a valid dict (type=type_error.dict)" """
         orm_mode = True
 
 class Token(BaseModel):
