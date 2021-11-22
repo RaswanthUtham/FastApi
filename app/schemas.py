@@ -7,6 +7,8 @@ from datetime import datetime
 from pydantic.networks import EmailStr
 from typing import Optional
 
+from pydantic.types import conint
+
 class UserCreate(BaseModel):
     email: EmailStr
     password: str
@@ -31,12 +33,19 @@ class PostBase(BaseModel):
 class PostCreate(PostBase):
     pass
 
-class Post(PostBase):
+class Posts(PostBase):
     created_at: datetime
     id: int
     owner_id: int
     owner: UserPost
 
+    class Config:
+        """ to avoid this error "value is not a valid dict (type=type_error.dict)" """
+        orm_mode = True
+
+class PostVote(BaseModel):
+    Post: Posts
+    votes: int
     class Config:
         """ to avoid this error "value is not a valid dict (type=type_error.dict)" """
         orm_mode = True
@@ -47,3 +56,7 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     id: Optional[str] = None
+
+class Vote(BaseModel):
+    post_id: int
+    dir: conint(le=1)

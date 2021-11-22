@@ -3,7 +3,7 @@ This files contains the tables and other data structures that are available in d
 """
 
 from sqlalchemy import Column, Integer, String, Boolean, TIMESTAMP, text
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import composite, relationship
 from sqlalchemy.sql.expression import null
 from sqlalchemy.sql.schema import ForeignKey
 
@@ -25,4 +25,9 @@ class User(Base):
     email = Column(String, nullable=False, unique=True)
     password = Column(String, nullable=False)
     created_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text('now()'))
+
+class Vote(Base):
+    __tablename__ = "votes"
+    post_id = Column(Integer, ForeignKey("posts_alchemy.id", ondelete="CASCADE"), primary_key=True, nullable=False)
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), primary_key=True, nullable=False)
     

@@ -1,20 +1,25 @@
-from fastapi import FastAPI, Depends, status, HTTPException, Response, APIRouter
+from fastapi import Depends, status, HTTPException, Response, APIRouter
 from sqlalchemy.orm import Session
 from typing import List, Optional
+
+from sqlalchemy.sql.functions import func
 
 from .. import models, schemas, oauth2
 from ..database import get_db
 
 router = APIRouter(prefix="/posts", tags=["Posts"])
 
-@router.get("/", response_model=List[schemas.Post])
+@router.get("/", response_model=List[schemas.PostVote])
 async def get_posts(db: Session=Depends(get_db), limit: int = 10, skip: int=0, search: Optional[str] = ''):
-    posts_query = db.query(models.Post).filter(models.Post.title.contains(search)).limit(limit).offset(skip)
+    posts_query = db.query(models.Post, func.count(models.Vote.post_id).label("votes")).join(
+        models.Vote, models.Vote.post_id == models.Post.id, isouter=True
+    ).group_by(models.Post.id).filter(models.Post.title.contains(search)).limit(limit).offset(skip)
+
     posts = posts_query.all()
     print(posts_query)
     return posts
 
-@router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.Post)
+@router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.Posts)
 async def create_post(post: schemas.PostCreate, db: Session=Depends(get_db), user: int=Depends(oauth2.get_current_user)):
     new_post = models.Post(owner_id=user.id, **post.dict())
     db.add(new_post)
@@ -22,9 +27,11 @@ async def create_post(post: schemas.PostCreate, db: Session=Depends(get_db), use
     db.refresh(new_post)
     return  new_post
 
-@router.get("/{id}", response_model=schemas.Post)
+@router.get("/{id}", response_model=schemas.PostVote)
 async def get_post_by_id(id: int, db: Session=Depends(get_db)):
-    post = db.query(models.Post).filter(models.Post.id == id).first()
+    post = db.query(models.Post, func.count(models.Vote.post_id).label("votes")).join(
+        models.Vote, models.Vote.post_id == models.Post.id, isouter=True
+    ).group_by(models.Post.id).filter(models.Post.id == id).first()
     if not post:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"post with {id} not found")
     return post
@@ -41,7 +48,7 @@ async def delete_post_by_id(id: int, db: Session=Depends(get_db), user: int=Depe
     db.commit()
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
-@router.put("/{id}", response_model=schemas.Post)
+@router.put("/{id}", response_model=schemas.Posts)
 async def update_post_by_id(id: int, post: schemas.PostCreate, db: Session=Depends(get_db), user: int=Depends(oauth2.get_current_user)):
     post_query = db.query(models.Post).filter(models.Post.id == id)
     post_to_update = post_query.first()
