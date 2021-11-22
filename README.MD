@@ -16,4 +16,4 @@
     syntax:
         url?param_name=value
     example:
-        http://localhost:8000?limit=2
+        http://localhost:8000?limit=2&search=string%20space
