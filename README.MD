@@ -68,3 +68,19 @@
     add colunms address in users table through models.py
     then run alembic revision --autogenerate -m "auto added address to users table"
     this will generate a .py file in alembic.versions dir, which will he having the commands for adding the coloumn.
+
+## CORS:
+    Cross Origin Resource Sharing.
+    Used to share resource over internet. (between different domains)
+
+    1. go to www.google.com
+    2. right click open inspect element
+    3. select console tab
+    4. execute fetch('http://localhost:8000').then(res => res.json()).then(console.log)
+    
+    5. you will get below error.
+    """
+    Access to fetch at 'http://localhost:8000/' from origin 'https://www.google.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+    """
+
+    6. Enable CORS in fast api and try again, you will get the result.
