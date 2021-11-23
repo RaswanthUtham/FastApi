@@ -84,3 +84,8 @@
     """
 
     6. Enable CORS in fast api and try again, you will get the result.
+
+## Heroku:
+    https://rash-fastapi.herokuapp.com/
+
+    Procfile: give the commands to start the application in this file
