@@ -5,7 +5,11 @@ from .database import engine
 from .router import post, user, auth, vote
 from .config import settings
 
-models.Base.metadata.create_all(bind=engine)
+# Tells the sqlalchemy to run the commands in models.py to create the tables
+# Since we use alembic this cmd is not needed
+# models.Base.metadata.create_all(bind=engine)
+
+
 app = FastAPI()
 
 app.include_router(post.router)
