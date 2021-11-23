@@ -22,3 +22,7 @@
     Alembic is like a GIT for Databases.
     It is used to track changes in the DBMS
     It also has other features like automatic reloading when a data is changed through a ORM.
+
+    pip install alembic
+    alembic --help
+    alembic init dirName
