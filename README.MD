@@ -48,3 +48,23 @@
 
     alembic current
     alembic history
+
+## auto genarate the table for database.
+    alembic revision --autogenerate -m "auto vote"
+    this will create a votes table automatically, It happens because we had imported the Base from app.models.
+
+### If you get this error during auto generate.
+    FAILED: Can't proceed with --autogenerate option; environment script D:\workspace\fastapi\alembic\env.py does not provide a MetaData object or sequence of objects to the context.
+
+    In env.py file add the metadata
+    target_metadata = Base.metadata
+
+## auto generate changes in models
+
+    The changes made in models.py file like adding phone number or address coloumn to users will reflect automatically in alembic.versions dir using the following command
+    
+    alembic revision --autogenerate -m "auto vote"
+    Example:
+    add colunms address in users table through models.py
+    then run alembic revision --autogenerate -m "auto added address to users table"
+    this will generate a .py file in alembic.versions dir, which will he having the commands for adding the coloumn.

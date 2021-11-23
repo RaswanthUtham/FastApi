@@ -19,24 +19,26 @@ depends_on = None
 
 def upgrade():
     op.add_column(
-        'posts',
-        sa.Column('owner_id', sa.Integer, sa.ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+        'posts_alchemy',
+        sa.Column('owner_id', sa.Integer, 
+        # sa.ForeignKey("users.id", ondelete="CASCADE"), 
+        nullable=False)
     )
 
     # TO CREATE A FOREIGN KEY SEPERATELY
-    # op.create_foreign_key(
-    #     'posts_users_fk', 
-    #     source_table="posts", 
-    #     referent_table="users", 
-    #     local_cols=['owner_id'], 
-    #     remote_cols=['id'], 
-    #     ondelete="CASCADE"
-    #     )
+    op.create_foreign_key(
+        'posts_users_fk', 
+        source_table="posts_alchemy", 
+        referent_table="users", 
+        local_cols=['owner_id'], 
+        remote_cols=['id'], 
+        ondelete="CASCADE"
+        )
 
 
 def downgrade():
-    # op.drop_constraint('posts_users_fk', table_name="posts")
+    op.drop_constraint('posts_users_fk', table_name="posts_alchemy")
     op.drop_column(
-        'posts',
+        'posts_alchemy',
         'owner_id'
     )

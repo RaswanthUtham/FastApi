@@ -19,14 +19,13 @@ depends_on = None
 
 def upgrade():
     op.add_column(
-        'posts',
+        'posts_alchemy',
         sa.Column('published', sa.Boolean, server_default="True", nullable=False),
-        # sa.Column('owner_id', sa.Integer, sa.ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     )
 
 
 def downgrade():
     op.drop_column(
-        'posts',
+        'posts_alchemy',
         'published'
     )

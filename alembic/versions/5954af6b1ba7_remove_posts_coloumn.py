@@ -18,7 +18,7 @@ depends_on = None
 
 def upgrade():
     op.add_column(
-        'posts',
+        'posts_alchemy',
         sa.Column('created_at', sa.TIMESTAMP(timezone=True), nullable=False, server_default=sa.text('now()'))
 
     )
@@ -26,6 +26,6 @@ def upgrade():
 
 def downgrade():
     op.drop_column(
-        'posts',
+        'posts_alchemy',
         'created_at'
     )
