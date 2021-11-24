@@ -87,5 +87,14 @@
 
 ## Heroku:
     https://rash-fastapi.herokuapp.com/
-
     Procfile: give the commands to start the application in this file
+    
+## heroku commands:
+    heroku create appname
+    heroku addons:create heroku-postgresql:hobby-dev
+    heroku ps:restart
+    heroku run bash
+    heroku apps:info appname
+
+## running alembic on heroku:
+    heroku run "alembic upgrade head"
