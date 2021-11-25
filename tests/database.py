@@ -14,7 +14,7 @@ engine = create_engine(
 TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base.metadata.create_all(bind=engine)
 
-@pytest.fixture(scope="module")
+@pytest.fixture(scope="function")
 def session():
     Base.metadata.drop_all(bind=engine)
     Base.metadata.create_all(bind=engine)
@@ -24,7 +24,7 @@ def session():
     finally:
         db.close()
 
-@pytest.fixture(scope="module")
+@pytest.fixture(scope="function")
 def client(session):
     def override_get_db():
         try:
