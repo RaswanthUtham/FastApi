@@ -4,11 +4,11 @@ import pytest
 from app import schemas
 from app.config import settings
 
-def test_root(client):
-    res = client.get("/")
-    print(res.json().get('message'))
-    assert res.json().get('message') == 'Welcome to my API!! Montize your Knowledge. And Just do it'
-    assert res.status_code == 200
+# def test_root(client):
+#     res = client.get("/")
+#     print(res.json().get('message'))
+#     assert res.json().get('message') == 'Welcome to my API!! Montize your Knowledge. And Just do it'
+#     assert res.status_code == 200
 
 def test_create_user(client):
     res = client.post("/users/", json={"email": "magizhan_01@gmail.com", "password": "test@123"})
