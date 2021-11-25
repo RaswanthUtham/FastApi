@@ -32,4 +32,4 @@ app.include_router(vote.router)
 
 @app.get("/")
 async def root():
-    return {"message": "Welcome to my API!! Montize your Knowledge. And Just do it"}
+    return {"message": "Welcome to my API!! Montize your Knowledge.Succennfully Deployed to Heroku from CICD pipeline"}
