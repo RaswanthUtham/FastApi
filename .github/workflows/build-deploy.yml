@@ -94,9 +94,9 @@ jobs:
     needs: [build]
     steps:
       - name: deploying to Heroku
-        # uses: actions/checkout@v2
-      
       # pull our github repo
+        uses: actions/checkout@v2
+      
       # install heroku cli
       # heroku login
       # add git remote for heroku
