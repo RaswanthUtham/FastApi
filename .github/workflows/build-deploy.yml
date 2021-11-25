@@ -1,14 +1,27 @@
-name: Build and Deploy code
+name: Build and Deploy Code
 
-on: [push, pull_requests]
+on: [push, pull_request]
 
 jobs:
   job1:
     runs-on: ubuntu-latest
     steps:
-      - name: checkout or pulling the repo
-      #  From the market place search for checkout and you will get the below command
+      - name: pulling git repo, get the command from github market place for checkout
         uses: actions/checkout@v2
-      - name: Automating the integration and deployment
+      - name: Automation CI CD
         uses: echo "Automation Started"
-        
+
+
+# name: Build and Deploy code
+
+# on: [push, pull_requests]
+
+# jobs:
+#   job1:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: checkout or pulling the repo
+#       #  From the market place search for checkout and you will get the below command
+#         uses: actions/checkout@v2
+#       - name: Automating the integration and deployment
+#         uses: echo "Automation Started"
