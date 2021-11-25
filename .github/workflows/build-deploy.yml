@@ -96,7 +96,8 @@ jobs:
       - name: deploying to Heroku
       # pull our github repo
         uses: actions/checkout@v2
-      
+
+      - name: setup Heroku and deploying code
       # install heroku cli
       # heroku login
       # add git remote for heroku
