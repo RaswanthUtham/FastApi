@@ -107,3 +107,8 @@
             --disable-warnings disale the warnings
             -x stop after the 1st failure
 
+
+## conftest file
+    we can put the fixtures and other configs inside this file
+    it can be used will all the test files without importing within a package
+
