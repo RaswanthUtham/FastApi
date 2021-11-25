@@ -112,3 +112,14 @@
     we can put the fixtures and other configs inside this file
     it can be used will all the test files without importing within a package
 
+## COntinious Integration and Continious Deployment
+    It is a VM provided by some CI-CD pipelines like Jenkins, Github-Action
+    In that we can provide some commands to perform the automation of testing and deployment when we push the changes to the code
+    
+    GitHub Actions (Refer the qweb page and quickstart guide)
+    GitHub Market place, where we download the GitHub Actions.
+
+    1. Create .github/workflows dir in project root dir
+
+
+

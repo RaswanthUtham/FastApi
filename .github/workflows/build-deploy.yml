@@ -1,0 +1,14 @@
+name: Build and Deploy code
+
+on: [push, pull_requests]
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout or pulling the repo
+      #  From the market place search for checkout and you will get the below command
+        uses: actions/checkout@v2
+      - name: Automating the integration and deployment
+        uses: echo "Automation Started"
+        
