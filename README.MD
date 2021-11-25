@@ -98,3 +98,12 @@
 
 ## running alembic on heroku:
     heroku run "alembic upgrade head"
+
+## pytest
+    pytest -s -v --disable-warnings -x
+        where
+            -s prints print statement
+            -v verbose
+            --disable-warnings disale the warnings
+            -x stop after the 1st failure
+
