@@ -15,6 +15,14 @@ jobs:
         run: |
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
+  My-Own-Job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repository code
+        uses: actions/checkout@v2
+      - run: echo "Successfully checkout repo"
+      - name: Automation Started
+        run:  exho "Hello Everyone"
 
 
 
